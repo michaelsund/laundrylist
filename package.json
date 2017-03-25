@@ -1,0 +1,40 @@
+{
+  "name": "Laundrylist",
+  "version": "1.2.0",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "remoteandroid": "adb reverse tcp:8000 tcp:8000"
+  },
+  "dependencies": {
+    "immutability-helper": "^2.0.0",
+    "moment": "^2.17.1",
+    "native-base": "^0.5.18",
+    "react": "15.4.1",
+    "react-addons-update": "^15.4.1",
+    "react-native": "0.38.0",
+    "react-native-action-button": "^2.0.17",
+    "react-native-fbsdk": "^0.4.0",
+    "react-native-icons": "^0.7.1",
+    "react-native-lazyload": "^1.1.0",
+    "react-native-vector-icons": "^3.0.0",
+    "react-redux": "^4.4.6",
+    "redux": "^3.6.0",
+    "redux-devtools-extension": "^1.0.0",
+    "sqlite3": "^3.1.8",
+    "whatwg-fetch": "1.0.0"
+  },
+  "jest": {
+    "preset": "jest-react-native"
+  },
+  "devDependencies": {
+    "babel-jest": "17.0.2",
+    "babel-preset-react-native": "1.9.0",
+    "eslint": "^3.10.2",
+    "eslint-plugin-react": "^6.7.1",
+    "jest": "17.0.2",
+    "jest-react-native": "17.0.2",
+    "react-test-renderer": "15.3.2",
+    "remote-redux-devtools": "^0.5.4"
+  }
+}

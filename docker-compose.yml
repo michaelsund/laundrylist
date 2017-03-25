@@ -1,0 +1,21 @@
+version: '2'
+services:
+  laundrylistsapi:
+    build: .
+    command: ['nodemon', 'server.js']
+    ports:
+      - 8080:8080
+    volumes:
+      - ./server:/usr/src/app
+      - /usr/src/app/node_modules
+    container_name: 'laundrylistsapi'
+    links:
+      - laundrylistsdb
+  laundrylistsdb:
+    image: mongo:latest
+    # environment:
+    #   MYSQL_ROOT_PASSWORD: dev
+    #   MYSQL_DATABASE: opentourney
+    ports:
+      - 27017:27017
+    container_name: 'laundrylistsdb'

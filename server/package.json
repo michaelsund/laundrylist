@@ -1,0 +1,19 @@
+{
+  "name": "laundrylistsserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mongoose": "^4.6.8",
+    "remotedev-server": "^0.3.0-beta-2",
+    "websocket": "^1.0.24"
+  }
+}
