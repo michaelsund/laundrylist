@@ -8,6 +8,7 @@ import {
   Image,
   AsyncStorage
 } from 'react-native';
+import Version from '../../../package.json';
 import {connect} from 'react-redux';
 import * as actions from '../../actions';
 import * as FBSDK from 'react-native-fbsdk';
@@ -32,12 +33,6 @@ class Me extends Component {
     super(props);
   };
 
-  // componentWillReceiveProps(props) {
-  //   if (props.user.picture) {
-  //     this.setState({imageUrl: props.user.picture.data.url});
-  //   }
-  // };
-
   render() {
     return (
       <View style={styles.container}>
@@ -54,6 +49,9 @@ class Me extends Component {
             />
             <Text style={styles.nameText}>
               {this.props.user.first_name + ' ' + this.props.user.last_name}
+            </Text>
+            <Text style={styles.nameText}>
+              version {Version.version}
             </Text>
           </View>
           <View style={styles.buttoncontainer}>
@@ -84,7 +82,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   userinfo: {
-    marginTop: 40
+    marginTop: 40,
+    alignItems: 'center'
   },
   fbButton: {
     height: 30,

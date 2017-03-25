@@ -5,6 +5,7 @@ import {
   View,
   Image
 } from 'react-native';
+import Version from '../../package.json';
 import {connect} from 'react-redux';
 import * as actions from '../actions';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -39,6 +40,9 @@ class UserInfo extends Component {
         <Text style={styles.nameText}>
           {this.props.user.first_name + ' ' + this.props.user.last_name}
         </Text>
+        <Text style={styles.nameText}>
+          version {Version.version}
+        </Text>
       </View>
     )
   };
@@ -55,7 +59,7 @@ const styles = StyleSheet.create({
     height:80,
     width: 80,
     borderRadius: 40,
-    marginTop: 80
+    marginTop: 120
   },
   nameText: {
     marginTop: 5,

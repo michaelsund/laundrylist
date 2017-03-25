@@ -1,4 +1,4 @@
-## lists 1.0.0
+## lists 1.2.0
 
 Read this to generate a keystore if you intend to push the android app to a device with 'react-native run-android --variant=release'
 https://facebook.github.io/react-native/docs/signed-apk-android.html
@@ -44,6 +44,7 @@ forward devserver ports for redux remote tool with 'npm run remoteandroid'
 start the node server locally with 'node server.js'
 
 ### Todo
+* accept/decline sharedlist
 * https for backend routes to enable ios fetch.
 * express middleware to verify facebook authentication from app provided by each post.
 * facebook auth get friends and only sort the sharelist view though friends and not all users.

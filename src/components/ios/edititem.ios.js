@@ -67,7 +67,7 @@ class EditItem extends Component {
     return (
       <View>
         <NavigationBar
-          canPop={false}
+          canPop={true}
           canAdd={true}
           title="Me"
           navigator={this.props.navigator}

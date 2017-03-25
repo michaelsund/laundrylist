@@ -44,3 +44,4 @@ android/app/laundrylists.keystore
 *.tar.gz
 serversettings.json
 android/app/src/main/res/values/strings.xml
+.flowconfig
