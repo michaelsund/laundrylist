@@ -42,3 +42,8 @@ forward devserver ports for redux remote tool with 'npm run remoteandroid'
 !dont forget to put the application into dev mode in serversettings.json
 
 start the node server locally with 'node server.js'
+
+### Todo
+* https for backend routes to enable ios fetch.
+* express middleware to verify facebook authentication from app provided by each post.
+* facebook auth get friends and only sort the sharelist view though friends and not all users.
