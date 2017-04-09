@@ -5,6 +5,7 @@ import {
   ADD_ITEM,
   ADD_COOWNER,
   DEL_COOWNER,
+  SET_COOWNERACCEPTED,
 } from '../actions';
 
 const initialState = [];
@@ -67,6 +68,21 @@ const lists = (state = initialState, action) => {
       return [
         ...newList
       ]
+    case 'SET_COOWNERACCEPTED':
+    let updatedList = [...state];
+    state.map((list, i) => {
+      if (list._id === action.listId) {
+        updatedList[i].coOwners.map((coOwner, x) => {
+          if (coOwner.facebookId === action.coOwnerId) {
+            coOwner.accepted = true;
+          }
+        });
+      }
+    });
+    return [
+      ...updatedList
+    ]
+      return state;
     default:
       return state;
   }

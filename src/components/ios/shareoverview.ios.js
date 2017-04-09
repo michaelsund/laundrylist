@@ -34,7 +34,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		onSetFetchedLists: (lists) => dispatch(actions.setFetchedLists(lists)),
-    onSetNetStatus: (isConnected, lastUpdated) => dispatch(actions.setNetStatus(isConnected, lastUpdated))
+    onSetNetStatus: (isConnected, lastUpdated) => dispatch(actions.setNetStatus(isConnected, lastUpdated)),
+    onDeleteList: (listId) => dispatch(actions.deleteList(listId)),
+    onSetCoOwnerAccepted: (listId, coOwnerId) => dispatch(actions.setCoOwnerAccepted(listId, coOwnerId))
 	};
 };
 
@@ -98,6 +100,75 @@ class ShareOverview extends Component {
     .done();
   };
 
+  confirmRemoveMeFromShare(listId) {
+    fetch('http://' + this.serverUrl + '/api/declineshare',
+    {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId: this.props.user.id,
+        listId: listId
+      })
+    })
+    .then((response) => response.json())
+    .then((responseData) => {
+      this.props.onDeleteList(listId);
+    })
+    .catch((error) => {
+      Alert.alert(
+        'Gosh darnit',
+        'The was a problem with the request, please try again later.',
+        [
+          {text: 'Ok', onPress: () => {}, style: 'cancel'}
+        ]
+      );
+    })
+    .done();
+  }
+
+  _removeMeFromShare(listId) {
+    Alert.alert(
+      'Decline shared list',
+      'Are you sure?',
+      [
+        {text: 'No', onPress: () => {}, style: 'cancel'},
+        {text: 'Yes', onPress: () => this.confirmRemoveMeFromShare(listId)},
+      ]
+    );
+  }
+
+  _acceptShare(listId) {
+    fetch('http://' + this.serverUrl + '/api/acceptshare',
+    {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId: this.props.user.id,
+        listId: listId
+      })
+    })
+    .then((response) => response.json())
+    .then((responseData) => {
+      this.props.onSetCoOwnerAccepted(listId, this.props.user.id);
+    })
+    .catch((error) => {
+      Alert.alert(
+        'Gosh darnit',
+        'The was a problem with the request, please try again later.',
+        [
+          {text: 'Ok', onPress: () => {}, style: 'cancel'}
+        ]
+      );
+    })
+    .done();
+  }
+
   componentWillReceiveProps(nextProps) {
     this.setState({dataSource: this.ds.cloneWithRows(nextProps.lists)})
   };
@@ -144,8 +215,8 @@ class ShareOverview extends Component {
                         </Text>
                     </View>
                     <View style={styles.listManage}>
-                      <TouchableHighlight style={styles.manageBtn} underlayColor={'#FFFFFF'}>
-                        <View>
+                      <TouchableHighlight underlayColor={'#FFFFFF'}>
+                        <View style={styles.manageBtn}>
                           { rowData.owner.facebookId === this.props.user.id ? (
                               <Icon
                                 style={styles.shareIcon}
@@ -153,25 +224,32 @@ class ShareOverview extends Component {
                                 onPress={() => {this._shareList(rowData)}}
                               />
                             ) : (
-                              // rowData.coOwners.map((user) => {
-                              //   if (user.facebookId === this.props.user.id) {
-                              //     if (user.accepted) {
-                              //       <Icon
-                              //         style={styles.acceptIcon}
-                              //         name="check"
-                              //         onPress={() => {}}
-                              //       />
-                              //     }
-                              //     else {
-                              //       <Icon
-                              //         style={styles.unAcceptIcon}
-                              //         name="remove"
-                              //         onPress={() => {}}
-                              //       />
-                              //     }
-                              //   }
-                              // })
-                              null
+                              rowData.coOwners.map((user, i) => {
+                                if (user.facebookId === this.props.user.id) {
+                                  if (user.accepted) {
+                                    return <Icon
+                                      key={i}
+                                      style={styles.removeIcon}
+                                      name="delete"
+                                      onPress={() => {this._removeMeFromShare(rowData._id)}}
+                                    />
+                                  }
+                                  else {
+                                    return <View key={i} style={{flex: 1, flexDirection: 'row'}}>
+                                      <Icon
+                                        style={styles.acceptIcon}
+                                        name="check"
+                                        onPress={() => {this._acceptShare(rowData._id)}}
+                                      />
+                                      <Icon
+                                        style={styles.unAcceptIcon}
+                                        name="do-not-disturb"
+                                        onPress={() => {this._removeMeFromShare(rowData._id)}}
+                                      />
+                                    </View>
+                                  }
+                                }
+                              })
                             )
                           }
                         </View>
@@ -221,27 +299,40 @@ const styles = StyleSheet.create({
     color: '#9E9E9E',
   },
   manageBtn: {
-    flex: 1,
     marginTop: 28,
+    flexDirection: 'row'
   },
   shareIcon: {
-    fontSize: 20,
+    fontSize: 22,
     color: '#9E9E9E',
     textAlign: 'right',
     marginTop: -8,
-    marginRight: 20
+    marginRight: 9,
+    flex: 1
   },
   acceptIcon: {
-    fontSize: 26,
+    fontSize: 22,
     color: '#9E9E9E',
     textAlign: 'right',
-    marginRight: 9
+    marginTop: -8,
+    marginRight: 12,
+    flex: 1
   },
   unAcceptIcon: {
-    fontSize: 26,
+    fontSize: 22,
     color: '#9E9E9E',
     textAlign: 'right',
-    marginRight: 9
+    marginTop: -8,
+    marginRight: 9,
+    flex: 1
+  },
+  removeIcon: {
+    fontSize: 22,
+    color: '#9E9E9E',
+    textAlign: 'right',
+    marginTop: -8,
+    marginRight: 9,
+    flex: 1
   },
   toolbar: {
     backgroundColor: '#FF6600',

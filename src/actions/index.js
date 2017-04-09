@@ -6,9 +6,11 @@ export const clearCurrentItems = () => ({type: 'UNSET_CURRENTITEMS'});
 
 export const setFetchedLists = (lists) => ({type: 'SET_FETECHEDLISTS', lists});
 
+export const addItem = (itemObject, listId) => ({type: 'ADD_TOCURRENTITEMS', itemObject, listId});
+
 export const addCoOwnerToList = (coOwner) => ({type: 'ADD_COOWNERLIST', coOwner});
 
-export const addItem = (itemObject, listId) => ({type: 'ADD_TOCURRENTITEMS', itemObject, listId});
+export const setCoOwnerAccepted = (listId, coOwnerId) => ({type: 'SET_COOWNERACCEPTED', listId, coOwnerId});
 
 export const editItem = (item) => ({type: 'EDIT_CURRENTITEM', item});
 

@@ -7,6 +7,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var options = { promiseLibrary: require('bluebird') };
+var Websocket = require("ws");
 
 var List = require('./models/list');
 var User = require('./models/user');
@@ -28,6 +29,11 @@ app.use(bodyParser.json());
 var port = config.port;
 
 var router = express.Router();
+
+function verifyFacebook(token) {
+  // https://graph.facebook.com/debug_token?input_token={token-to-inspect}&access_token={app_id}|{app_secret}
+  return true;
+};
 
 router.post('/', function(req, res) {
   List.aggregate([
@@ -310,19 +316,49 @@ router.post('/delitem', function(req, res) {
   });
 });
 
+router.post('/acceptshare', function(req, res) {
+  //set the coOwner accepted to true by facebookId in list
+  List.update({'_id': req.body.listId, 'coOwners.facebookId': req.body.userId}, {$set: {'coOwners.$.accepted': true}}, function(err, result) {
+    res.json({success: true});
+  });
+});
+
+router.post('/declineshare', function(req, res) {
+  //removes the coOwner from the list, essentially declining or removing the user
+  List.update({'_id': req.body.listId}, {$pull: {coOwners: {'facebookId': req.body.userId}}}, function(err) {
+    res.json({success: true});
+  });
+});
+
 app.use('/api', router);
 
-// var options = {
-//   key: fs.readFileSync('./privkey.pem'),
-//   cert: fs.readFileSync('./fullchain.pem'),
-//   ca: fs.readFileSync('./chain.pem')
-// };
+var server = http.createServer(app);
+var wss = new Websocket.Server({server: server});
 
+wss.on('connection', function connection(ws) {
+  console.log('New connection');
+  ws.on('message', function incoming(message) {
+    console.log('received: ', message);
+    ws.send('message recieved');
+  });
+  ws.on('close', function() {
+    console.log('a session was disconnected');
+  });
+});
 
-// var httpserver = http.createServer(app).listen(8080, '0.0.0.0');
-// var httpsserver = https.createServer(options, app).listen(8443, '0.0.0.0');
+var listenOnAddress = '';
+if (config.devMode) {
+  listenOnAddress = config.dev;
+}
+else {
+  listenOnAddress = config.prod;
+}
 
-//Express listen
-app.listen(config.port, '0.0.0.0', function() {
-  console.log('express listening');
+server.listen(config.port, listenOnAddress, function listening() {
+  if (config.devMode) {
+    console.log('Server in Development mode on ip: ' + listenOnAddress + ':' + config.port);
+  }
+  else {
+    console.log('Server in Production mode on ip: ' + listenOnAddress + ':' + config.port);
+  }
 });

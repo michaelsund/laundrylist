@@ -1,4 +1,4 @@
-## lists 1.2.0
+## lists 1.3.0
 
 Read this to generate a keystore if you intend to push the android app to a device with 'react-native run-android --variant=release'
 https://facebook.github.io/react-native/docs/signed-apk-android.html
@@ -45,6 +45,7 @@ start the node server locally with 'node server.js'
 
 ### Todo
 * accept/decline sharedlist
-* https for backend routes to enable ios fetch.
-* express middleware to verify facebook authentication from app provided by each post.
+* update items view in realtime with websockets
+* middleware for both api routes and socket calls to verify that the sender is authenticated against the facebook app and has permissions on the list.
+* https for express and websockets (also required by ios for fetches in release builds).
 * facebook auth get friends and only sort the sharelist view though friends and not all users.

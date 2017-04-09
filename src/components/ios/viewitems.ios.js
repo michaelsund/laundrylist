@@ -190,6 +190,32 @@ class ViewItems extends Component {
 
   componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange);
+
+    // Websocket
+    // this.ws = new WebSocket('ws://' + this.serverUrl);
+    // this.ws.onopen = () => {
+    //   console.log('CONNECTED WEBSOCKET');
+    //   this.ws.send('add subscriber to list ' + this.props.list._id);
+    // };
+    // this.ws.onmessage = (e) => {
+    //   console.log('GOT: ' + e.data);
+    // };
+    //
+    // this.ws.onerror = (e) => {
+    //   console.log('ERROR CONNECTING TO SOCKET');
+    //   console.log(e.message);
+    // };
+    //
+    // this.ws.onclose = (e) => {
+    //   this.ws.send('closing for list ' + this.props.list._id);
+    //   console.log('CLOSING SOCKET');
+    //   console.log(e.code, e.reason);
+    // };
+  }
+
+  componentDidUnMount() {
+    this.ws.close();
+    console.log('closing socket in umount');
   }
 
   checkIfPicked(item) {
@@ -197,6 +223,7 @@ class ViewItems extends Component {
   };
 
   _onItemClicked(index, data) {
+    // this.ws.close();
     this.props.onSetItemPicked(this.props.list._id, parseInt(index));
     fetch('http://' + this.serverUrl + '/api/setpicked',
     {
@@ -212,6 +239,7 @@ class ViewItems extends Component {
       })
     })
     .done();
+    // Check if all items in list are picked
     if (!this.props.currentitems.every(this.checkIfPicked)) {
       this.showToast();
     }

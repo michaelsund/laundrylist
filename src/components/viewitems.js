@@ -31,7 +31,7 @@ const mapStateToProps = (state) => {
     currentitems: state.currentitems,
     netStatus: state.netStatus,
     user: state.user
-  };
+  }
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -63,15 +63,15 @@ class ViewItems extends Component {
     else {
       this.serverUrl = Config.prod + ':' + Config.port;
     }
-  };
+  }
 
-  _listViewOffset = 0
+  _listViewOffset = 0;
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(nextProps.currentitems)
     });
-  };
+  }
 
   _deleteListConfirmation() {
     if (this.props.netStatus.isConnected) {
@@ -84,7 +84,7 @@ class ViewItems extends Component {
         ]
       );
     }
-  };
+  }
 
   _deleteList() {
     fetch('http://' + this.serverUrl + '/api/removelist',
@@ -107,7 +107,7 @@ class ViewItems extends Component {
       }
     })
     .done();
-  };
+  }
 
   _clearListConfirmation() {
     if (this.props.netStatus.isConnected) {
@@ -120,11 +120,11 @@ class ViewItems extends Component {
         ]
       );
     }
-  };
+  }
 
   showToast() {
     ToastAndroid.show('No more items to pick!', ToastAndroid.LONG);
-  };
+  }
 
   _clearList() {
     fetch('http://' + this.serverUrl + '/api/clearlist',
@@ -145,7 +145,7 @@ class ViewItems extends Component {
       }
     })
     .done();
-  };
+  }
 
   _getItems() {
     console.log('GETTING ITEMS FOR: ' + this.props.list._id);
@@ -181,18 +181,18 @@ class ViewItems extends Component {
       .done();
     })
     .done();
-  };
+  }
 
   _handleAppStateChange = (event) => {
     if (event === 'active') {
       this._getItems();
     }
-  };
+  }
 
   componentWillMount() {
     this._getItems();
     AppState.addEventListener('change', this._handleAppStateChange);
-  };
+  }
 
   componentWillUnmount() {
     AppState.removeEventListener('change', this._handleAppStateChange);
@@ -200,7 +200,7 @@ class ViewItems extends Component {
 
   checkIfPicked(item) {
     return item.picked;
-  };
+  }
 
   _onItemClicked(index, data) {
     this.props.onSetItemPicked(this.props.list._id, parseInt(index));
@@ -218,10 +218,11 @@ class ViewItems extends Component {
       })
     })
     .done();
+    // Check if all items in list are picked
     if (!this.props.currentitems.every(this.checkIfPicked)) {
       this.showToast();
     }
-  };
+  }
 
   _onActionSelected(index) {
     if (index === 0) {
@@ -242,12 +243,12 @@ class ViewItems extends Component {
         );
       }
     }
-  };
+  }
 
   _onBackClicked() {
     this.props.navigator.pop();
     this.props.onClearCurrentItems();
-  };
+  }
 
   _onAddNewItemClicked() {
     this.props.navigator.push({
@@ -257,7 +258,7 @@ class ViewItems extends Component {
         uniqueItems: this.state.uniqueItems
       }
     });
-  };
+  }
 
   _onEditItem(data, index) {
     this.props.navigator.push({
@@ -469,6 +470,6 @@ const styles = StyleSheet.create({
     height: 50,
     flex: 6
   }
-});
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(ViewItems);
+export default connect(mapStateToProps, mapDispatchToProps)(ViewItems)
