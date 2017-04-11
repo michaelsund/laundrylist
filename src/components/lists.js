@@ -137,12 +137,6 @@ class Lists extends Component {
     this.props.navigator.push({name: 'NewList'});
   }
 
-  // _onActionSelected(index) {
-  //   if (index === 0) {
-  //     this._getLists();
-  //   }
-  // }
-
   _onAddPressed() {
     this.props.navigator.push({
       name: 'NewList'
@@ -160,13 +154,6 @@ class Lists extends Component {
           subtitleColor="white"
           title="My lists"
           titleColor="white"
-          // actions={
-          //   [
-          //     { title: '', iconName: 'autorenew', iconSize: 26, show: 'always' }
-          //   ]
-          // }
-          // overflowIconName="more-vert"
-          // onActionSelected={this._onActionSelected.bind(this)}
           onIconClicked={() => this.props.drawer.openDrawer()}
         />
         <ListView
@@ -188,10 +175,10 @@ class Lists extends Component {
                     </Text>
                 </View>
               </TouchableHighlight>
-              <Text
+              {/* <Text
                 style={styles.ownerText}>
                 Created by {rowData.owner.firstName} {rowData.owner.lastName}
-              </Text>
+              </Text> */}
             </View>
           }
           renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
@@ -243,7 +230,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   listItem: {
-    height: 40,
+    height: 100,
     flex: 6,
     flexDirection: 'row'
   },
@@ -254,7 +241,7 @@ const styles = StyleSheet.create({
   rowContainer: {
     flexDirection: 'column',
     flex: 1
-  },
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Lists);

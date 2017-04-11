@@ -1,0 +1,21 @@
+version: '2'
+services:
+  db:
+    image: mongodb:3.4.3
+    # environment:
+    #   MYSQL_ROOT_PASSWORD: dev
+    #   MYSQL_DATABASE: opentourney
+    ports:
+      - 3306:3306
+    container_name: 'lldb'
+  api:
+    build: .
+    command: ['nodemon', '/usr/src/app/server/server.js']
+    ports:
+      - 8080:8080
+    links:
+      - db
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    container_name: 'llapi'

@@ -269,7 +269,7 @@ class ShareOverview extends Component {
           ) : (
             <View style={styles.discContainer}>
               <Icon
-                name="priority-high"
+                name="signal-wifi-off"
                 style={styles.discIcon}
               />
             </View>

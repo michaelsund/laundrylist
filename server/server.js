@@ -30,6 +30,7 @@ var port = config.port;
 
 var router = express.Router();
 
+//TODO
 function verifyFacebook(token) {
   // https://graph.facebook.com/debug_token?input_token={token-to-inspect}&access_token={app_id}|{app_secret}
   return true;

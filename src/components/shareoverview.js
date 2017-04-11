@@ -278,7 +278,10 @@ class ShareOverview extends Component {
               renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
             />
           ) : (
-            <Text>Cannot share list while disconnected</Text>
+            <Icon
+              style={styles.disconnectedIcon}
+              name="signal-wifi-off"
+            />
           )
         }
       </View>
@@ -294,6 +297,12 @@ const styles = StyleSheet.create({
   manageBtn: {
     marginTop: 28,
     flexDirection: 'row'
+  },
+  disconnectedIcon: {
+    fontSize: 50,
+    color: '#9E9E9E',
+    textAlign: 'center',
+    marginTop: 30
   },
   shareIcon: {
     fontSize: 26,

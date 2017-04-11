@@ -63,6 +63,7 @@ class ViewItems extends Component {
     else {
       this.serverUrl = Config.prod + ':' + Config.port;
     }
+    this.ws = new WebSocket('ws://' + this.serverUrl);
   }
 
   _listViewOffset = 0;
@@ -192,10 +193,30 @@ class ViewItems extends Component {
   componentWillMount() {
     this._getItems();
     AppState.addEventListener('change', this._handleAppStateChange);
+
+    this.ws.onopen = () => {
+      console.log('CONNECTED WEBSOCKET');
+      this.ws.send('add subscriber to list ' + this.props.list._id);
+    };
+    this.ws.onmessage = (e) => {
+      console.log('GOT: ' + e.data);
+    };
+
+    this.ws.onerror = (e) => {
+      console.log('ERROR CONNECTING TO SOCKET');
+      console.log(e.message);
+    };
+
+    this.ws.onclose = (e) => {
+      this.ws.send('closing for list ' + this.props.list._id);
+      console.log('CLOSING SOCKET');
+      console.log(e.code, e.reason);
+    };
   }
 
   componentWillUnmount() {
     AppState.removeEventListener('change', this._handleAppStateChange);
+    this.ws.close();
   }
 
   checkIfPicked(item) {

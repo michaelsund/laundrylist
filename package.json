@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "remoteandroid": "adb reverse tcp:8000 tcp:8000"
+    "remoteandroid": "adb reverse tcp:8000 tcp:8000 && adb reverse tcp:8080 tcp:8080"
   },
   "dependencies": {
     "immutability-helper": "^2.0.0",

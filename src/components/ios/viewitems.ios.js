@@ -190,27 +190,6 @@ class ViewItems extends Component {
 
   componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange);
-
-    // Websocket
-    // this.ws = new WebSocket('ws://' + this.serverUrl);
-    // this.ws.onopen = () => {
-    //   console.log('CONNECTED WEBSOCKET');
-    //   this.ws.send('add subscriber to list ' + this.props.list._id);
-    // };
-    // this.ws.onmessage = (e) => {
-    //   console.log('GOT: ' + e.data);
-    // };
-    //
-    // this.ws.onerror = (e) => {
-    //   console.log('ERROR CONNECTING TO SOCKET');
-    //   console.log(e.message);
-    // };
-    //
-    // this.ws.onclose = (e) => {
-    //   this.ws.send('closing for list ' + this.props.list._id);
-    //   console.log('CLOSING SOCKET');
-    //   console.log(e.code, e.reason);
-    // };
   }
 
   componentDidUnMount() {
