@@ -137,7 +137,13 @@ class ViewItems extends Component {
   }
 
   showToast() {
-    ToastAndroid.show('No more items to pick!', ToastAndroid.LONG);
+    Alert.alert(
+      'No more items to pick!',
+      '',
+      [
+        {text: 'Ok', onPress: () => {}, style: 'cancel'},
+      ]
+    );
   }
 
   _clearList() {

@@ -37,7 +37,7 @@ Modify serversettings.json to your liking.
 
 ex: attach to a running virtual or physical android device with 'react-native run-android'
 
-forward devserver ports for redux remote tool with 'npm run remoteandroid'
+forward devserver ports and localhost ports for local server.js 'npm run remoteandroid'
 
 !dont forget to put the application into dev mode in serversettings.json
 

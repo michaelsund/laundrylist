@@ -65,6 +65,19 @@ class ViewItems extends Component {
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(nextProps.currentitems)
     });
+    //Check if all items are picked
+    if (nextProps.currentitems.length > 0) {
+      let allItemsPicked = true;
+      nextProps.currentitems.map((item) => {
+        console.log(JSON.stringify(item));
+        if (!item.picked) {
+          allItemsPicked = false;
+        }
+      });
+      if (allItemsPicked) {
+        this.showToast();
+      }
+    }
   };
 
   _deleteListConfirmation() {
@@ -197,10 +210,6 @@ class ViewItems extends Component {
     console.log('closing socket in umount');
   }
 
-  checkIfPicked(item) {
-    return item.picked;
-  };
-
   _onItemClicked(index, data) {
     // this.ws.close();
     this.props.onSetItemPicked(this.props.list._id, parseInt(index));
@@ -218,10 +227,6 @@ class ViewItems extends Component {
       })
     })
     .done();
-    // Check if all items in list are picked
-    if (!this.props.currentitems.every(this.checkIfPicked)) {
-      this.showToast();
-    }
   };
 
   _onActionSelected(index) {
