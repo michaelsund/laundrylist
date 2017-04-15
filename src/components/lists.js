@@ -175,10 +175,10 @@ class Lists extends Component {
                     </Text>
                 </View>
               </TouchableHighlight>
-              {/* <Text
+              <Text
                 style={styles.ownerText}>
                 Created by {rowData.owner.firstName} {rowData.owner.lastName}
-              </Text> */}
+              </Text>
             </View>
           }
           renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   listItem: {
-    height: 100,
+    height: 40,
     flex: 6,
     flexDirection: 'row'
   },

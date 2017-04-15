@@ -42,7 +42,7 @@ const mapDispatchToProps = (dispatch) => {
     onClearCurrentItems: () => dispatch(actions.clearCurrentItems()),
     onSetNetStatus: (isConnected, lastUpdated) => dispatch(actions.setNetStatus(isConnected, lastUpdated)),
     onGetItemsOffline: (lists, listId) => dispatch(actions.getItemsOffline(lists, listId)),
-    onDeleteItem: (index) => dispatch(actions.deleteItem(index)),
+    onDeleteItem: (index) => dispatch(actions.deleteItem(index))
 	};
 };
 
@@ -63,7 +63,7 @@ class ViewItems extends Component {
     else {
       this.serverUrl = Config.prod + ':' + Config.port;
     }
-    this.ws = new WebSocket('ws://' + this.serverUrl);
+    // this.ws = new WebSocket('ws://' + this.serverUrl);
   }
 
   _listViewOffset = 0;
@@ -72,6 +72,19 @@ class ViewItems extends Component {
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(nextProps.currentitems)
     });
+    //Check if all items are picked
+    if (nextProps.currentitems.length > 0) {
+      let allItemsPicked = true;
+      nextProps.currentitems.map((item) => {
+        console.log(JSON.stringify(item));
+        if (!item.picked) {
+          allItemsPicked = false;
+        }
+      });
+      if (allItemsPicked) {
+        this.showToast();
+      }
+    }
   }
 
   _deleteListConfirmation() {
@@ -194,33 +207,29 @@ class ViewItems extends Component {
     this._getItems();
     AppState.addEventListener('change', this._handleAppStateChange);
 
-    this.ws.onopen = () => {
-      console.log('CONNECTED WEBSOCKET');
-      this.ws.send('add subscriber to list ' + this.props.list._id);
-    };
-    this.ws.onmessage = (e) => {
-      console.log('GOT: ' + e.data);
-    };
-
-    this.ws.onerror = (e) => {
-      console.log('ERROR CONNECTING TO SOCKET');
-      console.log(e.message);
-    };
-
-    this.ws.onclose = (e) => {
-      this.ws.send('closing for list ' + this.props.list._id);
-      console.log('CLOSING SOCKET');
-      console.log(e.code, e.reason);
-    };
+    // this.ws.onopen = () => {
+    //   console.log('CONNECTED WEBSOCKET');
+    //   this.ws.send('add subscriber to list ' + this.props.list._id);
+    // };
+    // this.ws.onmessage = (e) => {
+    //   console.log('GOT: ' + e.data);
+    // };
+    //
+    // this.ws.onerror = (e) => {
+    //   console.log('ERROR CONNECTING TO SOCKET');
+    //   console.log(e.message);
+    // };
+    //
+    // this.ws.onclose = (e) => {
+    //   this.ws.send('closing for list ' + this.props.list._id);
+    //   console.log('CLOSING SOCKET');
+    //   console.log(e.code, e.reason);
+    // };
   }
 
   componentWillUnmount() {
     AppState.removeEventListener('change', this._handleAppStateChange);
-    this.ws.close();
-  }
-
-  checkIfPicked(item) {
-    return item.picked;
+    // this.ws.close();
   }
 
   _onItemClicked(index, data) {
@@ -239,10 +248,6 @@ class ViewItems extends Component {
       })
     })
     .done();
-    // Check if all items in list are picked
-    if (!this.props.currentitems.every(this.checkIfPicked)) {
-      this.showToast();
-    }
   }
 
   _onActionSelected(index) {

@@ -78,6 +78,9 @@ class Login extends Component {
       this.props.onSetUser(data);
       this.props.navigator.resetTo({name: 'Lists'});
     })
+    .catch((error) => {
+      console.log('GRAPH POST ERROR: ' + JSON.stringify(error));
+    })
     .done();
   }
 

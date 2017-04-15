@@ -61,6 +61,8 @@ const currentitems = (state = initialState, action) => {
         }),
         ...state.slice(action.itemIndex + 1)
       ];
+    case 'GET_ALLPICKED':
+      return getPickedStatusAll(state);
     case 'GET_ITEMSOFFLINE':
       const offlineItems = [];
       if (action.lists.length > 0) {

@@ -17,7 +17,7 @@ if (config.devMode) {
 }
 console.log(config);
 if (config.devMode) {
-  mongoose.connect('mongodb://' + config.mongo + '/laundrylistsdev', options);
+  mongoose.connect('mongodb://' + config.mongoserver + '/laundrylistsdev', options);
 }
 else {
   mongoose.connect('mongodb://' + config.mongo + '/laundrylists', options);
@@ -334,18 +334,18 @@ router.post('/declineshare', function(req, res) {
 app.use('/api', router);
 
 var server = http.createServer(app);
-var wss = new Websocket.Server({server: server});
-
-wss.on('connection', function connection(ws) {
-  console.log('New connection');
-  ws.on('message', function incoming(message) {
-    console.log('received: ', message);
-    ws.send('message recieved');
-  });
-  ws.on('close', function() {
-    console.log('a session was disconnected');
-  });
-});
+// var wss = new Websocket.Server({server: server});
+//
+// wss.on('connection', function connection(ws) {
+//   console.log('New connection');
+//   ws.on('message', function incoming(message) {
+//     console.log('received: ', message);
+//     ws.send('message recieved');
+//   });
+//   ws.on('close', function() {
+//     console.log('a session was disconnected');
+//   });
+// });
 
 var listenOnAddress = '';
 if (config.devMode) {
