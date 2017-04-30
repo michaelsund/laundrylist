@@ -30,6 +30,7 @@ class EditItem extends Component {
     console.log(this.props.data);
     this.state = {
       text: this.props.data.name,
+      description: this.props.data.description,
       quantity: this.props.data.quantity
     };
     this.serverUrl = '';
@@ -42,16 +43,20 @@ class EditItem extends Component {
 
   _onEditDoneClicked() {
     if (this.state.text.length > 0) {
+      // if (this.state.description.length <= 0) {
+      //   this.state.description = undefined;
+      // }
       fetch('http://' + this.serverUrl + '/api/edititem', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({listId: this.props.listId, name: this.state.text, quantity: this.state.quantity, itemId: this.props.data._id})
+        body: JSON.stringify({listId: this.props.listId, name: this.state.text, quantity: this.state.quantity, description: this.state.description, itemId: this.props.data._id})
       }).then((response) => response.json()).then((responseData) => {
         this.props.onEditItem({
           name: this.state.text,
+          description: this.state.description,
           quantity: this.state.quantity,
           itemIndex: parseInt(this.props.index)
         });
@@ -71,7 +76,8 @@ class EditItem extends Component {
     return (
       <View>
         <Icon.ToolbarAndroid style={styles.toolbar} title="Edit" titleColor="white" navIconName="arrow-back" iconSize={26} onIconClicked={this._onBackClicked.bind(this)}/>
-        <TextInput style={styles.input} autoFocus={true} onChangeText={(text) => this.setState({text})} value={this.state.text}/>
+        <TextInput placeholder="Item name" style={styles.input} autoFocus={true} onChangeText={(text) => this.setState({text})} value={this.state.text}/>
+        <TextInput placeholder="A short description (not required)" style={styles.input} onChangeText={(description) => this.setState({description})} value={this.state.description}/>
         <View>
           <Text style={styles.quantity}>x{this.state.quantity}</Text>
           <Slider style={styles.slider} onValueChange={(quantity) => this.setState({quantity: quantity})} value={this.state.quantity} step={1} minimumValue={1} maximumValue={10}/>

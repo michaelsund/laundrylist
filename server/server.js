@@ -177,7 +177,6 @@ router.post('/setpicked', function(req, res) {
 });
 
 router.post('/newlist', function(req, res) {
-  console.log(req.body);
   List.create({
     name: req.body.listName,
     items: [],
@@ -205,7 +204,6 @@ router.post('/newlist', function(req, res) {
           $unwind: '$owner'
         }]
         ,function(err, lists) {
-          console.log('newList: ' + JSON.stringify(lists));
           res.json(lists[0]);
       });
     }
@@ -288,14 +286,13 @@ router.post('/newitem', function(req, res) {
         list.uniqueItems.push(newItemname);
       }
 
-      console.log(newItemname + ' with length of ' + newItemname.length + ' in [' + list.uniqueItems + ']');
-
       // Add the new item.
       list.items.push(
         {
           name: newItemname,
           picked: false,
           quantity: req.body.quantity,
+          description: req.body.description,
         }
       );
       list.save(function(err) {
@@ -306,7 +303,7 @@ router.post('/newitem', function(req, res) {
 });
 
 router.post('/edititem', function(req, res) {
-  List.update({'items._id': req.body.itemId}, {$set: {'items.$.name': req.body.name,'items.$.quantity': req.body.quantity}}, function(err) {
+  List.update({'items._id': req.body.itemId}, {$set: {'items.$.name': req.body.name,'items.$.quantity': req.body.quantity, 'items.$.description': req.body.description}}, function(err) {
     res.json({success: true});
   });
 });

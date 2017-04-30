@@ -31,6 +31,7 @@ class NewItem extends Component {
     this.state = {
       suggesting: false,
       text: '',
+      description: '',
       quantity: 1,
       dataSource: this.ds.cloneWithRows([])
     };
@@ -50,9 +51,9 @@ class NewItem extends Component {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({listId: this.props.listId, name: this.state.text, quantity: this.state.quantity})
+        body: JSON.stringify({listId: this.props.listId, name: this.state.text, quantity: this.state.quantity, description: this.state.description})
       }).then((response) => response.json()).then((responseData) => {
-        this.props.onAddItem({name: this.state.text, quantity: this.state.quantity, picked: false, _id:responseData.itemId}, this.props.listId);
+        this.props.onAddItem({name: this.state.text, quantity: this.state.quantity, description: this.state.description, picked: false, _id:responseData.itemId}, this.props.listId);
         this.props.navigator.pop();
       }).catch((error) => {
         this.props.onSetNetStatus(false, null);
@@ -105,11 +106,16 @@ class NewItem extends Component {
         />
         <View>
           <TextInput
-            placeholder="This little item of mine"
+            placeholder="Item name"
             style={styles.input}
             autoFocus={true}
             onChangeText={(text) => {this._searchUniqueItems(text)}}
             value={this.state.text}/>
+          <TextInput
+            placeholder="A short description (not required)"
+            style={styles.input}
+            onChangeText={(desc) => { this.setState({description: desc}) }}
+            value={this.state.description} />
           {this.state.suggesting ? (
             <View style={styles.fillerContainer}>
               <Icon name="cancel" style={styles.cancel} onPress={() => {this.setState({dataSource: this.ds.cloneWithRows([]), suggesting: false})}} />

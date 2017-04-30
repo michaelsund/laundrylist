@@ -151,9 +151,10 @@ class Lists extends Component {
           navIconName="menu"
           iconSize={26}
           subtitle={this.props.netStatus.message}
+          title="Laundrylists"
           subtitleColor="white"
-          title="My lists"
           titleColor="white"
+          // logo={require ('../../LL-inverted-48x48.png')}
           onIconClicked={() => this.props.drawer.openDrawer()}
         />
         <ListView

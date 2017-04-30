@@ -5,7 +5,7 @@ var ListSchema = new Schema({
   name: String,
   owner: String,
   coOwners: [{facebookId: String, accepted: Boolean}],
-  items: [{name: String, picked: Boolean, quantity: Number}],
+  items: [{name: String, picked: Boolean, quantity: Number, description: String}],
   uniqueItems: [String],
   createdAt: Date
 });

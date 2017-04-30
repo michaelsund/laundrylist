@@ -137,12 +137,10 @@ class ViewItems extends Component {
   }
 
   showToast() {
-    Alert.alert(
+    ToastAndroid.showWithGravity(
       'No more items to pick!',
-      '',
-      [
-        {text: 'Ok', onPress: () => {}, style: 'cancel'},
-      ]
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM
     );
   }
 
@@ -375,6 +373,7 @@ class ViewItems extends Component {
           titleColor="white"
           navIconName="arrow-back"
           iconSize={26}
+          // logo={require ('../../LL-inverted-48x48.png')}
           onIconClicked={this._onBackClicked.bind(this)}
           actions={
             [
@@ -396,37 +395,49 @@ class ViewItems extends Component {
           }
           onScroll={this._onScroll}
           renderRow={(rowData, sectionID, rowID) =>
-            <View style={styles.rowContainer}>
-              <TouchableHighlight underlayColor={'#FFFFFF'} style={styles.listItem} onPress={this._onItemClicked.bind(this, rowID, rowData)}>
-                <View style={styles.itemContainer}>
-                  <Text
-                    style={[
-                      styles.quantityText,
-                      rowData.picked && styles.Picked,
-                      !rowData.picked && styles.NotPicked
-                    ]}>
-                    {rowData.quantity}
-                  </Text>
-                  <Text
-                    style={[
-                      styles.itemText,
-                      rowData.picked && styles.Picked,
-                      !rowData.picked && styles.NotPicked
-                    ]}>
-                    {rowData.name}
-                  </Text>
-                </View>
-              </TouchableHighlight>
-              {this.props.netStatus.isConnected ? (
-                <Icon name="edit" style={styles.edit} onPress={this._onEditItem.bind(this, rowData, rowID)} />
-              ):(
-                null
-              )}
-              {this.props.netStatus.isConnected ? (
-                <Icon name="close" style={styles.delete} onPress={this._onDeleteItem.bind(this, rowData._id, rowID)} />
-              ):(
-                null
-              )}
+            <View style={styles.columnContainer}>
+              <View style={styles.rowContainer}>
+                <TouchableHighlight underlayColor={'#FFFFFF'} style={styles.listItem} onPress={this._onItemClicked.bind(this, rowID, rowData)}>
+                  <View style={styles.itemContainer}>
+                    <Text
+                      style={[
+                        styles.quantityText,
+                        rowData.picked && styles.QuantPicked,
+                        !rowData.picked && styles.QuantNotPicked
+                      ]}>
+                      {rowData.quantity}
+                    </Text>
+                    <Text
+                      ellipsizeMode='tail'
+                      numberOfLines={1}
+                      style={[
+                        styles.itemText,
+                        rowData.picked && styles.Picked,
+                        !rowData.picked && styles.NotPicked
+                      ]}>
+                      {rowData.name}
+                    </Text>
+                  </View>
+                </TouchableHighlight>
+                {this.props.netStatus.isConnected ? (
+                  <Icon name="edit" style={styles.edit} onPress={this._onEditItem.bind(this, rowData, rowID)} />
+                ):(
+                  null
+                )}
+                {this.props.netStatus.isConnected ? (
+                  <Icon name="close" style={styles.delete} onPress={this._onDeleteItem.bind(this, rowData._id, rowID)} />
+                ):(
+                  null
+                )}
+              </View>
+              <View style={styles.rowContainer}>
+                <Text
+                  ellipsizeMode='tail'
+                  numberOfLines={1}
+                  style={styles.descText}>
+                  {rowData.description}
+                </Text>
+              </View>
             </View>
           }
           renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
@@ -455,14 +466,14 @@ const styles = StyleSheet.create({
   },
   edit: {
     fontSize: 26,
-    marginTop: 12,
+    marginTop: 18,
     textAlign: 'right',
     color: '#9E9E9E',
     flex: 1,
   },
   delete: {
     fontSize: 26,
-    marginTop: 12,
+    marginTop: 18,
     textAlign: 'right',
     color: '#9E9E9E',
     marginRight: 7,
@@ -475,16 +486,26 @@ const styles = StyleSheet.create({
   },
   rowContainer: {
     flexDirection: 'row',
+    minHeight: 25,
     flex: 8
+  },
+  columnContainer: {
+    flexDirection: 'column',
+    flex: 2
   },
   itemContainer: {
     flexDirection: 'row',
-    marginTop: 10,
+    marginTop: 14,
     marginLeft: 16,
   },
   itemText: {
     fontSize: 16,
     marginTop: 7
+  },
+  descText: {
+    fontSize: 14,
+    marginBottom: 8,
+    marginLeft: 16
   },
   quantityText: {
     fontSize: 24,
@@ -496,6 +517,12 @@ const styles = StyleSheet.create({
   },
   NotPicked: {
     textDecorationLine: 'none',
+    fontWeight: 'bold'
+  },
+  QuantPicked: {
+    color: '#9E9E9E'
+  },
+  QuantNotPicked: {
     fontWeight: 'bold'
   },
   listItem: {

@@ -42,6 +42,7 @@ const currentitems = (state = initialState, action) => {
         ...state.slice(0, action.item.itemIndex),
         Object.assign({}, state[action.item.itemIndex], {
           name: action.item.name,
+          description: action.item.description,
           quantity: action.item.quantity
         }),
         ...state.slice(action.item.itemIndex + 1)

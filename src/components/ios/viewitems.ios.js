@@ -336,37 +336,49 @@ class ViewItems extends Component {
             />
           }
           renderRow={(rowData, sectionID, rowID) =>
-            <View style={styles.rowContainer}>
-              <TouchableHighlight underlayColor={'#FFFFFF'} style={styles.listItem} onPress={this._onItemClicked.bind(this, rowID, rowData)}>
-                <View style={styles.itemContainer}>
-                  <Text
-                    style={[
-                      styles.quantityText,
-                      rowData.picked && styles.Picked,
-                      !rowData.picked && styles.NotPicked
-                    ]}>
-                    {rowData.quantity}
-                  </Text>
-                  <Text
-                    style={[
-                      styles.itemText,
-                      rowData.picked && styles.Picked,
-                      !rowData.picked && styles.NotPicked
-                    ]}>
-                    {rowData.name}
-                  </Text>
-                </View>
-              </TouchableHighlight>
-              {this.props.netStatus.isConnected ? (
-                <Icon name="edit" style={styles.edit} onPress={this._onEditItem.bind(this, rowData, rowID)} />
-              ):(
-                null
-              )}
-              {this.props.netStatus.isConnected ? (
-                <Icon name="close" style={styles.delete} onPress={this._onDeleteItem.bind(this, rowData._id, rowID)} />
-              ):(
-                null
-              )}
+            <View style={styles.columnContainer}>
+              <View style={styles.rowContainer}>
+                <TouchableHighlight underlayColor={'#FFFFFF'} style={styles.listItem} onPress={this._onItemClicked.bind(this, rowID, rowData)}>
+                  <View style={styles.itemContainer}>
+                    <Text
+                      style={[
+                        styles.quantityText,
+                        rowData.picked && styles.Picked,
+                        !rowData.picked && styles.NotPicked
+                      ]}>
+                      {rowData.quantity}
+                    </Text>
+                    <Text
+                      ellipsizeMode='tail'
+                      numberOfLines={1}
+                      style={[
+                        styles.itemText,
+                        rowData.picked && styles.Picked,
+                        !rowData.picked && styles.NotPicked
+                      ]}>
+                      {rowData.name}
+                    </Text>
+                  </View>
+                </TouchableHighlight>
+                {this.props.netStatus.isConnected ? (
+                  <Icon name="edit" style={styles.edit} onPress={this._onEditItem.bind(this, rowData, rowID)} />
+                ):(
+                  null
+                )}
+                {this.props.netStatus.isConnected ? (
+                  <Icon name="close" style={styles.delete} onPress={this._onDeleteItem.bind(this, rowData._id, rowID)} />
+                ):(
+                  null
+                )}
+              </View>
+              <View style={styles.rowContainer}>
+                <Text
+                  ellipsizeMode='tail'
+                  numberOfLines={1}
+                  style={styles.descText}>
+                  {rowData.description}
+                </Text>
+              </View>
             </View>
           }
           renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
@@ -409,6 +421,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 8
   },
+  columnContainer: {
+    flexDirection: 'column',
+    flex: 2
+  },
   itemContainer: {
     flexDirection: 'row',
     marginTop: 10,
@@ -429,6 +445,11 @@ const styles = StyleSheet.create({
   NotPicked: {
     textDecorationLine: 'none',
     // fontWeight: 'bold'
+  },
+  descText: {
+    fontSize: 12,
+    marginBottom: 4,
+    marginLeft: 16
   },
   listItem: {
     height: 50,

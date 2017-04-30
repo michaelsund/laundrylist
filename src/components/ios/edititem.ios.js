@@ -30,6 +30,7 @@ class EditItem extends Component {
     console.log(this.props.data);
     this.state = {
       text: this.props.data.name,
+      description: this.props.data.description,
       quantity: this.props.data.quantity
     };
     this.serverUrl = '';
@@ -48,11 +49,12 @@ class EditItem extends Component {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({listId: this.props.listId, name: this.state.text, quantity: this.state.quantity, itemId: this.props.data._id})
+        body: JSON.stringify({listId: this.props.listId, name: this.state.text, description: this.state.description, quantity: this.state.quantity, itemId: this.props.data._id})
       }).then((response) => response.json()).then((responseData) => {
         this.props.onEditItem({
           name: this.state.text,
           quantity: this.state.quantity,
+          description: this.state.description,
           itemIndex: parseInt(this.props.index)
         });
         this.props.navigator.pop();
@@ -78,6 +80,12 @@ class EditItem extends Component {
           autoFocus={true}
           onChangeText={(text) => this.setState({text})}
           value={this.state.text}
+        />
+        <TextInput
+          placeholder="A short description (not required)"
+          style={styles.input}
+          onChangeText={(description) => this.setState({description})}
+          value={this.state.description}
         />
         <View>
           <Text

@@ -137,7 +137,7 @@ class Lists extends Component {
         <NavigationBar
           canPop={false}
           canAdd={true}
-          title="My lists"
+          title="Laundrylists"
           addFunc={() => {this._onAddPressed()}}
           navigator={this.props.navigator}
         />
