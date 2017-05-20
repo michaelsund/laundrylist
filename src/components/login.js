@@ -96,6 +96,25 @@ class Login extends Component {
     })
     .done();
   }
+  // TODO Used for custom button, and more readPermissions, cant get acccess to friends since graph v2.0 :(
+  // doLogin() {
+  //   FBSDK.LoginManager.logInWithReadPermissions(['public_profile','user_friends'])
+  //   .then((result) => {
+  //     if (result.isCancelled) {
+  //       console.log('Login cancelled');
+  //     } else {
+  //       console.log('Login success with permissions: ' +result.grantedPermissions.toString());
+  //       FBSDK.AccessToken.getCurrentAccessToken().then((data) => {
+  //         console.log('DATA ' + JSON.stringify(data));
+  //         this._getUserInfo(data.accessToken);
+  //       })
+  //
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     console.log('Login fail with error: ' + error);
+  //   })
+  // }
 
   render() {
     return (
@@ -109,7 +128,6 @@ class Login extends Component {
         <Text style={styles.versiontext}>v{PackageInfo.version}</Text>
         <FBSDK.LoginButton
           style={styles.fbButton}
-          publishPermissions={["publish_actions"]}
           onLoginFinished={
             (error, result) => {
               if (error) {

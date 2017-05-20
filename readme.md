@@ -44,6 +44,7 @@ forward devserver ports and localhost ports for local server.js 'npm run remotea
 start the node server locally with 'node server.js'
 
 ### Todo
-* middleware for both api routes and socket calls to verify that the sender is authenticated against the facebook app and has permissions on the list.
-* https for express and websockets (also required by ios for fetches in release builds).
 * facebook auth get friends and only sort the sharelist view though friends and not all users.
+* indication in the lists view that someone has shared a list with you to accept/decline
+* middleware for both api routes and socket calls to verify that the sender is authenticated against the facebook app and has permissions on the list.
+* https for express (also required by ios for fetches in release builds).
