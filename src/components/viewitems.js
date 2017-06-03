@@ -10,7 +10,6 @@ import {
   TextInput,
   View,
   Fetch,
-  BackAndroid,
   Navigator,
   Modal,
   AsyncStorage,

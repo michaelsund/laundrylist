@@ -30,6 +30,17 @@ class AuthCheck extends Component {
   };
 
   componentDidMount() {
+    BackAndroid.addEventListener('hardwareBackPress', () => {
+      const currentRoutes = this.props.navigator.getCurrentRoutes();
+      if (currentRoutes.length === 1) {
+        if (currentRoutes[0].name === 'Lists') {
+          return false;
+        }
+      } else {
+        this.props.navigator.pop();
+      }
+      return true;
+    });
     AsyncStorage.getItem('@LaundrylistsStore:user').then((user) => {
       const storedUserObject = JSON.parse(user);
       // Check if the object stored exists, and has the id property, in case faulty data is set.

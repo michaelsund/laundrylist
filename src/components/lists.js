@@ -10,7 +10,6 @@ import {
   TextInput,
   View,
   Fetch,
-  BackAndroid,
   Navigator,
   AsyncStorage,
   Alert,
@@ -115,13 +114,6 @@ class Lists extends Component {
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(nextProps.lists)
     });
-  }
-
-  componentDidMount() {
-    BackAndroid.addEventListener('hardwareBackPress', function() {
-      this.props.navigator.pop();
-      return true;
-    }.bind(this));
   }
 
   _listPressed(list) {

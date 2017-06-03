@@ -43,6 +43,16 @@ forward devserver ports and localhost ports for local server.js 'npm run remotea
 
 start the node server locally with 'node server.js'
 
+## Android studio needs SDK 23.0.1 to be installed installed
+follow this guide to get started https://facebook.github.io/react-native/docs/getting-started.html
+
+react-native-fbsdk craps out in version ^0.4.0, change to
+
+compile('com.facebook.android:facebook-android-sdk:4.22.1')
+
+in node_modules/react-native-fbsdk/android/build.grade
+
+
 ### Todo
 * facebook auth get friends and only sort the sharelist view though friends and not all users.
 * indication in the lists view that someone has shared a list with you to accept/decline

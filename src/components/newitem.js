@@ -10,7 +10,6 @@ import {
   TouchableHighlight,
   View,
   Fetch,
-  BackAndroid,
   Navigator,
   Slider
 } from 'react-native';

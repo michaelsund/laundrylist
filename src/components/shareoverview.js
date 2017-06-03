@@ -10,7 +10,6 @@ import {
   TextInput,
   View,
   Fetch,
-  BackAndroid,
   Navigator,
   AsyncStorage,
   Alert,
@@ -97,13 +96,6 @@ class ShareOverview extends Component {
       .done();
     })
     .done();
-  }
-
-  componentDidMount() {
-    BackAndroid.addEventListener('hardwareBackPress', function() {
-      this.props.navigator.pop();
-      return true;
-    }.bind(this));
   }
 
   componentWillMount() {

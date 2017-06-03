@@ -10,7 +10,6 @@ import {
   TouchableHighlight,
   View,
   Fetch,
-  BackAndroid,
   Navigator,
   AsyncStorage,
   Slider
