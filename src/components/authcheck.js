@@ -3,7 +3,8 @@ import React, {Component} from 'react';
 import {
   AsyncStorage,
   View,
-  Text
+  Text,
+  BackAndroid
 } from 'react-native';
 import {connect} from 'react-redux';
 import * as actions from '../actions';
