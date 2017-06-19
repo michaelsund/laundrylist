@@ -179,6 +179,7 @@ class ShareWith extends Component {
   };
 
   renderRow(user) {
+    const base64Image = `data:image/png;base64,${user.pictureBlob}`;
     return (
       <View style={styles.view}>
         <LazyloadView host="shareList">
@@ -186,7 +187,7 @@ class ShareWith extends Component {
               <View style={styles.itemContainer}>
                 <Image
                   style={styles.image}
-                  source={{uri: user.pictureURL}}
+                  source={{uri: base64Image}}
                 />
                 <Text style={styles.nameText}>
                   {user.firstName} {user.lastName}

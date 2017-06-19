@@ -7,7 +7,8 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var options = { promiseLibrary: require('bluebird') };
-var Websocket = require("ws");
+var Websocket = require('ws');
+var request = require('request');
 
 var List = require('./models/list');
 var User = require('./models/user');
@@ -217,18 +218,22 @@ router.post('/newuser', function(req, res) {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         facebookId: req.body.id,
-        pictureURL: req.body.picture,
+        pictureURL: req.body.picture
       });
       newuser.save(function (err) {
         if (err) {
           res.json({status: 'failed to create user', success: false});
         }
         else {
+          // Save the image in mongodb
+          saveImageBinary(req.body.id, req.body.picture);
           res.json({status: 'new user created', success: true});
         }
       });
     }
     else {
+      // Update the image in mongodb
+      saveImageBinary(req.body.id, req.body.picture);
       res.json({status: 'user allready exists', success: false});
     }
   });
@@ -327,6 +332,20 @@ router.post('/declineshare', function(req, res) {
     res.json({success: true});
   });
 });
+
+// TODO Needs to be authenticated
+function saveImageBinary(id, picture) {
+  if (JSON.stringify(picture).includes('https://scontent.xx.fbcdn.net')) {
+    request({
+      url : picture,
+      encoding : null
+    }, function(error, response, body) {
+      User.update({'facebookId': id}, {$set: {'pictureBlob': body}}, function(err, result) {
+      });
+    });
+  }
+}
+
 
 app.use('/api', router);
 

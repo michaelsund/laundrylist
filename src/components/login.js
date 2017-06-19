@@ -41,7 +41,6 @@ class Login extends Component {
   };
 
   _saveUserOnServer(user) {
-    console.log('_saveUserOnServer got: ' + JSON.stringify(user));
     fetch('http://' + this.serverUrl + '/api/newuser',
     {
       method: 'POST',
