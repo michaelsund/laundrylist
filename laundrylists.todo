@@ -1,0 +1,9 @@
+
+☐ If a server is not running, the app crashes on start.
+☐ should be able to pick "pieces, pack, or kilos on a item."
+☐ mongoose mpromise promise library needs to be replaced! deprecated soon.
+☐ upgrade react-native "look at the curves version" remember --variant is replaced with --configuration
+
+＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+Archive:
+  ✔ edit view does not show the amount slider. @done(2017-07-08 17:59)

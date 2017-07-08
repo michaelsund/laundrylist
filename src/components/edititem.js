@@ -100,8 +100,6 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   slider: {
-    flex: 1,
-    height: 30,
     marginBottom: 20
   },
   quantity: {

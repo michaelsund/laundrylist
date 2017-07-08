@@ -39,7 +39,7 @@ ex: attach to a running virtual or physical android device with 'react-native ru
 
 forward devserver ports and localhost ports for local server.js 'npm run remoteandroid'
 
-!dont forget to put the application into dev mode in serversettings.json
+!dont forget to put the application into dev mode in server/serversettings.json
 
 start the node server locally with 'node server.js'
 
