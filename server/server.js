@@ -7,7 +7,6 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var options = { promiseLibrary: require('bluebird') };
-var Websocket = require('ws');
 var request = require('request');
 
 var List = require('./models/list');
@@ -350,18 +349,6 @@ function saveImageBinary(id, picture) {
 app.use('/api', router);
 
 var server = http.createServer(app);
-// var wss = new Websocket.Server({server: server});
-//
-// wss.on('connection', function connection(ws) {
-//   console.log('New connection');
-//   ws.on('message', function incoming(message) {
-//     console.log('received: ', message);
-//     ws.send('message recieved');
-//   });
-//   ws.on('close', function() {
-//     console.log('a session was disconnected');
-//   });
-// });
 
 var listenOnAddress = '';
 if (config.devMode) {

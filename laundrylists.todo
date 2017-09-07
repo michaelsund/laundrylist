@@ -1,4 +1,7 @@
 
+☐ Hunt down the bug that crashes the app on item adding.
+☐ Verify that ios version has the same functionality as android
+☐ Rename lists
 ☐ If a server is not running, the app crashes on start.
 ☐ should be able to pick "pieces, pack, or kilos on a item."
 ☐ mongoose mpromise promise library needs to be replaced! deprecated soon.
