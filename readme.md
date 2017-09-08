@@ -53,6 +53,18 @@ compile('com.facebook.android:facebook-android-sdk:4.22.1')
 in node_modules/react-native-fbsdk/android/build.grade
 
 
+## To get running.
+Either run
+
+yarn remoteandroid
+react-native run-android
+
+or
+
+yarn remoteandroid
+yarn run-android
+yarn start
+
 ### Todo
 * facebook auth get friends and only sort the sharelist view though friends and not all users.
 * indication in the lists view that someone has shared a list with you to accept/decline
