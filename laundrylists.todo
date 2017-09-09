@@ -1,15 +1,10 @@
-<<<<<<< HEAD
-
-☐ Hunt down the bug that crashes the app on item adding.
 ☐ Verify that ios version has the same functionality as android
+☐ Change menu logout entry to "Settings" where logout and clear local data can be chosen.
 ☐ Rename lists
-=======
-☐ Rename list.
->>>>>>> 0d51903d55a7c7ab1bbbcc572cb6cb3d2bae8e6c
 ☐ If a server is not running, the app crashes on start.
 ☐ should be able to pick "pieces, pack, or kilos on a item."
 ☐ mongoose mpromise promise library needs to be replaced! deprecated soon.
-☐ upgrade react-native "look at the curves version" remember --variant is replaced with --configuration
+☐ upgrade react-native "look at the curves version" remember --variant is replaced with --configuration (check out expo)
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:

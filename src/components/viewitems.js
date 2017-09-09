@@ -25,6 +25,8 @@ import * as actions from '../actions';
 import NewItem from './newitem';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+const _listViewOffset = 0;
+
 const mapStateToProps = (state) => {
   return {
     currentitems: state.currentitems,
@@ -45,8 +47,6 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-const _listViewOffset = 0;
-
 class ViewItems extends Component {
   constructor(props) {
     super(props);
@@ -54,8 +54,8 @@ class ViewItems extends Component {
     this.state = {
       dataSource: this.ds.cloneWithRows(this.props.currentitems),
       uniqueItems: [],
-      isActionButtonVisible: true,
-      runningRequest: false
+      runningRequest: false,
+      isActionButtonVisible: true
     };
     this.serverUrl = '';
     if (Config.devMode) {
@@ -323,22 +323,26 @@ class ViewItems extends Component {
   }
 
   _onScroll(event) {
+    // Simple fade-in / fade-out animation
     const CustomLayoutLinear = {
       duration: 100,
       create: { type: LayoutAnimation.Types.linear, property: LayoutAnimation.Properties.opacity },
       update: { type: LayoutAnimation.Types.linear, property: LayoutAnimation.Properties.opacity },
       delete: { type: LayoutAnimation.Types.linear, property: LayoutAnimation.Properties.opacity }
     }
+    // Check if the user is scrolling up or down by confronting the new scroll position with your own one
     const currentOffset = event.nativeEvent.contentOffset.y
-    const direction = (currentOffset > 0 && currentOffset > this._listViewOffset)
+    const direction = (currentOffset > 0 && currentOffset > _listViewOffset)
       ? 'down'
       : 'up'
+    // If the user is scrolling down (and the action-button is still visible) hide it
     const isActionButtonVisible = direction === 'up'
     if (isActionButtonVisible !== this.state.isActionButtonVisible) {
       LayoutAnimation.configureNext(CustomLayoutLinear)
       this.setState({ isActionButtonVisible })
     }
-    this._listViewOffset = currentOffset
+    // Update your scroll position
+    _listViewOffset = currentOffset
   }
 
   render() {
@@ -372,7 +376,7 @@ class ViewItems extends Component {
               onRefresh={() => {this._getItems()}}
             />
           }
-          onScroll={this._onScroll}
+          onScroll={(e) => {this._onScroll(e); }}
           renderRow={(rowData, sectionID, rowID) =>
             <View style={styles.columnContainer}>
               <View style={styles.rowContainer}>
@@ -427,8 +431,9 @@ class ViewItems extends Component {
               buttonColor="rgba(255,102,0,1)"
               onPress={() => {this._onAddNewItemClicked()}}
             />
+            ) : (null)
           ) : (null)
-        ):(null)}
+        }
       </View>
     )
   }
