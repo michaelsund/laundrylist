@@ -360,7 +360,7 @@ else {
 
 server.listen(config.port, listenOnAddress, function listening() {
   if (config.devMode) {
-    console.log('Server in Development mode on ip: ' + listenOnAddress + ':' + config.port);
+    console.log('Server in Development mode on ip: ' + listenOnAddress + ':' + config.devPort);
   }
   else {
     console.log('Server in Production mode on ip: ' + listenOnAddress + ':' + config.port);

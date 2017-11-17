@@ -32,7 +32,7 @@ class Login extends Component {
     super(props);
     this.serverUrl = '';
     if (Config.devMode) {
-      this.serverUrl = Config.dev + ':' + Config.port;
+      this.serverUrl = Config.dev + ':' + Config.devPort;
     } else {
       this.serverUrl = Config.prod + ':' + Config.port;
     }

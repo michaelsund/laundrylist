@@ -59,6 +59,10 @@ yarn run-android
 
 if the packager doesnt start by itself you may need to run "yarn start" aswell.
 
+## Run release build on connected android device
+set dev to false in serversettings.json
+yarn run-android --variant=release
+
 ### Todo
 * facebook auth get friends and only sort the sharelist view though friends and not all users.
 * indication in the lists view that someone has shared a list with you to accept/decline
