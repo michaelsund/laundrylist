@@ -50,6 +50,7 @@ const mapDispatchToProps = (dispatch) => {
 class ViewItems extends Component {
   constructor(props) {
     super(props);
+    this.handleAppStateChange = this.handleAppStateChange.bind(this);
     this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       dataSource: this.ds.cloneWithRows(this.props.currentitems),
@@ -66,6 +67,15 @@ class ViewItems extends Component {
     }
   }
 
+  componentWillMount() {
+    this._getItems();
+    AppState.addEventListener('change', this.handleAppStateChange);
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this.handleAppStateChange);
+  }
+
   componentWillReceiveProps(nextProps) {
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(nextProps.currentitems)
@@ -74,7 +84,6 @@ class ViewItems extends Component {
     if (nextProps.currentitems.length > 0) {
       let allItemsPicked = true;
       nextProps.currentitems.map((item) => {
-        console.log(JSON.stringify(item));
         if (!item.picked) {
           allItemsPicked = false;
         }
@@ -201,18 +210,9 @@ class ViewItems extends Component {
 
   handleAppStateChange(event) {
     if (event === 'active') {
+      console.log('app state changed updating list');
       this._getItems();
     }
-  }
-
-  componentWillMount() {
-    this._getItems();
-    AppState.addEventListener('change', this._handleAppStateChange);
-  }
-
-  componentWillUnmount() {
-    AppState.removeEventListener('change', this._handleAppStateChange);
-    // this.ws.close();
   }
 
   _onItemClicked(index, data) {

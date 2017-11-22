@@ -50,7 +50,6 @@ class Lists extends Component {
     }
     else {
       this.serverUrl = Config.prod + ':' + Config.port;
-      console.log('IN PROD MODE!');
     }
   };
 
@@ -105,7 +104,6 @@ class Lists extends Component {
     for (let i = 0; i < nextProps.lists.length; i++) {
       for (let x = 0; x < nextProps.lists[i].coOwners.length; x++) {
         if (nextProps.lists[i].coOwners[x].facebookId === this.props.user.id) {
-          console.log('LIST IS: ' + JSON.stringify(nextProps.lists[i].coOwners[x]));
           if (!nextProps.lists[i].coOwners[x].accepted) {
             this.props.onDeleteList(nextProps.lists[i]._id);
           }
