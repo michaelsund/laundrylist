@@ -1,6 +1,6 @@
-☐ Verify that ios version has the same functionality as android
-☐ Change menu logout entry to "Settings" where logout and clear local data can be chosen.
-☐ Rename lists
+
+☐ Update react version.
+☐ Show that a new list needs to be approved/declined in the navbar. that takes the user to "shared lists"
 ☐ If a server is not running, the app crashes on start.
 ☐ should be able to pick "pieces, pack, or kilos on a item."
 ☐ mongoose mpromise promise library needs to be replaced! deprecated soon.
