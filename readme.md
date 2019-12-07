@@ -3,6 +3,7 @@
 Read this to generate a keystore if you intend to push the android app to a device with 'react-native run-android --variant=release'
 https://facebook.github.io/react-native/docs/signed-apk-android.html
 Hint: keystore password is big bang rock paper scissor
+Note that it's this buildfile that needs to be changed android/app/build.gradle
 
 create the file serversettings.json in the project root directory with the following contents.
 ```json
